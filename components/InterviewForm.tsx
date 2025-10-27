@@ -21,12 +21,9 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea";
-import {useState} from "react";
-import {Loader} from "lucide-react";
-import {interviewFormSchema} from "@/lib/utils";
-
-// const [isProcessing, setIsProcessing] = useState(false)
-// const [status, setStatus] = useState('')
+import {createInterview} from "@/lib/actions/interview.actions";
+import React, {useState} from "react";
+import {redirect, useRouter} from "next/navigation";
 
 const formSchema = z.object({
     jobTitle: z.string().min(3).max(50, 'Job title is required'),
@@ -36,6 +33,7 @@ const formSchema = z.object({
 })
 
 export default function InterviewForm() {
+    const [questions, setQuestions] = useState<string | null>(null);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -45,15 +43,34 @@ export default function InterviewForm() {
             jobDescription: "",
         },
     })
+
+    const router = useRouter()
     
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const interview = await createInterview(values)
+        if (!interview) return 'Failed to create interview'
+        router.push(`/interview/${interview.id}`)
     }
+
+    // const onHandleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //
+    //     const res = await fetch('/api/interview', {
+    //         method: 'POST',
+    //         body: JSON.stringify(form),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     });
+    //
+    //     const { interviewId } = await res.json();
+    //     router.push(`/interview/${interviewId}`);
+    // };
 
     return (
         <main className='max-w-4xl items-center justify-center p-4 rounded-lg w-full mx-auto text-center mt-2'>
-            <h1 className='text-2xl font-semibold p-3'>AI Powered Interview Preparation</h1>
-            <p className="pb-4">Please fill in the relevant fields to start preparing for your big day</p>
+            <h1 className='text-lg md:text-2xl font-semibold p-3'>AI Powered Interview Preparation</h1>
+            <p className="pb-4 max-sm:text-sm">Please fill in the relevant fields to start preparing for your big day</p>
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -64,7 +81,10 @@ export default function InterviewForm() {
                             <FormItem>
                                 <FormLabel>Job Title</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Software Developer, Auditor, Cashier" {...field} />
+                                    <Input
+                                        placeholder="Software Developer, Auditor, Cashier"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -127,6 +147,9 @@ export default function InterviewForm() {
                     </Button>
                 </form>
             </Form>
+            {/*{questions && questions.length > 0 && (*/}
+            {/*    <>{questions}</>*/}
+            {/*)}*/}
         </main>
     )
 }
