@@ -15,40 +15,38 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import FileUploader from "@/components/FileUploader";
-
-const ACCEPTED_TYPES = [
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'text/plain',
-]
+import {analyzeResume} from "@/lib/actions/resume.actions";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     companyName: z.string().min(3).max(50, 'Job title is required'),
     jobTitle: z.string().min(3).max(50, 'Job title is required'),
     jobDescription: z.string().min(3, 'Job description is required'),
-    file: z.instanceof(File, { message: "Please upload a valid file" })
-        .refine(file => file.size <= 10 * 1024 * 1024, {
-            message: "File must be less than 10MB",
-        })
-        .refine(file => ACCEPTED_TYPES.includes(file.type), {
-            message: "Invalid file type. Only PDF, DOC, DOCX, and TXT are allowed.",
-        }),
 })
 
+
 export default function ResumeForm() {
+    const [file, setFile] = useState<File | null>(null);
+    const handleFileSelect = (file: File | null) => {
+        setFile(file);
+    }
+    const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             companyName: "",
             jobTitle: "",
-            jobDescription: "",
-            file: undefined
+            jobDescription: ""
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        if (!file) return
+        const resume = await analyzeResume({...values, file})
+        if (!resume) return 'Failed to create interview'
+        console.log(resume)
+        router.push(`/resume/${resume.id}`)
     }
 
     return (
@@ -99,21 +97,13 @@ export default function ResumeForm() {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="file"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Resume</FormLabel>
-                                <FormControl>
-                                    <FileUploader
-                                        onFileSelect={(file: File | null) => field.onChange(file)}
-                                        value={field.value}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
+                    <div className='space-y-2'>
+                        <FormLabel>Resume</FormLabel>
+                        <FileUploader
+                            onFileSelect={handleFileSelect}
+                            value={file}
+                        />
+                    </div>
                     <Button type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
                         Analyze Resume
                     </Button>
