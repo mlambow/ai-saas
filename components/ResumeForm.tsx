@@ -28,6 +28,8 @@ const formSchema = z.object({
 
 export default function ResumeForm() {
     const [file, setFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState<boolean>(false)
+    const [status, setStatus] = useState<string>('');
     const handleFileSelect = (file: File | null) => {
         setFile(file);
     }
@@ -42,11 +44,28 @@ export default function ResumeForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        if (!file) return
-        const resume = await analyzeResume({...values, file})
-        if (!resume) return 'Failed to create interview'
-        console.log(resume)
-        router.push(`/resume/${resume.id}`)
+        setLoading(true)
+        setStatus('Please wait as we review your resume')
+        try{
+            if (!file) return
+            const resume = await analyzeResume({...values, file})
+            if (!resume){
+                setStatus('Failed to review your resume. Please try again.')
+                setLoading(false)
+                return
+            } else {
+                setStatus('Resume reviewed successfully. Redirecting to review')
+                setLoading(true)
+                router.push(`/resume/${resume.id}`)
+            }
+            console.log(resume)
+        } catch (error) {
+            setLoading(false)
+            setStatus('Oh no, something went wrong. Please try again.')
+            return
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -54,61 +73,71 @@ export default function ResumeForm() {
             <h1 className="text-2xl font-semibold mb-2">
                 Smart Feedback For Your Dream Job
             </h1>
-            <p className="pb-4">Drop your resume for an ATS score and improvements score</p>
-
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                        control={form.control}
-                        name="companyName"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Company Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Amazon, Google, Shoprite" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="jobTitle"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Job Title</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Software Developer, Auditor, Cashier" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="jobDescription"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Job Description</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder={`Please copy and paste the job description here.`} {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className='space-y-2'>
-                        <FormLabel>Resume</FormLabel>
-                        <FileUploader
-                            onFileSelect={handleFileSelect}
-                            value={file}
-                        />
-                    </div>
-                    <Button type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
-                        Analyze Resume
-                    </Button>
-                </form>
-            </Form>
+            {loading ?
+                <div className='flex flex-col items-center justify-center'>
+                    <p>{status}</p>
+                    <img src='/resume-scan.gif' alt='loading' className='md:size-1/2'/>
+                </div>
+                :
+                <p className="pb-4">Drop your resume for an ATS score and improvements score</p>
+            }
+               {!loading &&
+                <>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                            <FormField
+                                control={form.control}
+                                name="companyName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Company Name</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Amazon, Google, Shoprite" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="jobTitle"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Job Title</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Software Developer, Auditor, Cashier" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="jobDescription"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Job Description</FormLabel>
+                                        <FormControl>
+                                            <Textarea placeholder={`Please copy and paste the job description here.`} {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className='space-y-2'>
+                                <FormLabel>Resume</FormLabel>
+                                <FileUploader
+                                    onFileSelect={handleFileSelect}
+                                    value={file}
+                                />
+                            </div>
+                            <Button type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
+                                Analyze Resume
+                            </Button>
+                        </form>
+                    </Form>
+                </>
+               }
         </main>
     )
 }
