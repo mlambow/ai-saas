@@ -4,8 +4,7 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
 import { useTheme } from "next-themes"
-import {Menu, Moon, Sun, X} from "lucide-react";
-import {useState} from "react";
+import {Moon, Sun} from "lucide-react";
 
 const Links = [
     { label: "Dashboard", href: "/dashboard" },
@@ -15,11 +14,9 @@ const Links = [
 
 export default function NavLinks() {
     const { theme, setTheme } = useTheme();
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const pathname = usePathname()
 
     const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
         <nav className='relative'>
@@ -40,7 +37,6 @@ export default function NavLinks() {
                         {label}
                     </Link>
                 ))}
-
             </div>
         </nav>
     );

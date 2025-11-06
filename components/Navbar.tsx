@@ -1,6 +1,8 @@
 import Link from "next/link";
 import {Laptop} from "lucide-react";
 import NavLinks from "@/components/NavLinks";
+import MobilePanel from "@/components/MobilePanel";
+import User from "@/components/User";
 
 export default function Navbar() {
     return (
@@ -10,9 +12,12 @@ export default function Navbar() {
                 Job Ready
             </Link>
 
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
                 <NavLinks />
-                <div>Sign in</div>
+                <User />
+            </div>
+            <div className='flex md:hidden items-center'>
+                <MobilePanel />
             </div>
         </nav>
     )
