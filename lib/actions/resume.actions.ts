@@ -29,7 +29,7 @@ function cleanAndParseJSON(text: string) {
         // 3️⃣ Parse it
         return JSON.parse(match[0]);
     } catch (err) {
-        console.error("❌ Failed to parse feedback JSON:", err);
+        console.error("Failed to parse feedback JSON:", err);
         console.log("Raw feedback text:", text);
         return null;
     }
@@ -83,7 +83,6 @@ export const analyzeResume = async ({jobDescription, companyName, jobTitle, file
     });
 
     const feedback = cleanAndParseJSON(result)
-    console.log(feedback)
 
     const { data: resume } = await supabase
         .from('resume')
