@@ -72,7 +72,7 @@ const MobilePanel: React.FC = () => {
                         onClick={togglePanel}
                         className="p-4 rounded-md md:hidden mt-4 cursor-pointer flex items-center justify-center w-12 h-12"
                     >
-                        { isOpen && <X className="size-16" /> }
+                        { isOpen && <X className="size-12" /> }
                     </Button>
                 </div>
             </div>

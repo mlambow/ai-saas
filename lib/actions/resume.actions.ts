@@ -7,6 +7,7 @@ import pdf from 'pdf-parse-new'
 import {auth} from "@clerk/nextjs/server";
 import {AIResponseFormat} from "@/constants";
 import mammoth from "mammoth";
+import {handleAnalyzeResume} from "@/types";
 
 const google = createGoogleGenerativeAI({
     apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY
@@ -24,7 +25,10 @@ function cleanAndParseJSON(text: string) {
 
         // 2️⃣ Extract the first JSON-like block just in case model adds commentary
         const match = cleaned.match(/{[\s\S]*}/);
-        if (!match) throw new Error("No JSON object found");
+        if (!match) {
+            console.log("No JSON object found in text");
+            return null;
+        }
 
         // 3️⃣ Parse it
         return JSON.parse(match[0]);
@@ -115,4 +119,16 @@ export const getResume = async (id : string) => {
     }
 
     return { ...data, feedback };
+}
+
+export const getUserResume = async (userId: string) => {
+    const { data, error } = await supabase
+        .from('resume')
+        .select()
+        .eq('user_id', userId)
+        .order('created_at',{ ascending: false });
+
+    if (error) throw new Error(error.message);
+
+    return data
 }
