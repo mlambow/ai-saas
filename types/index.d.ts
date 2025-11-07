@@ -33,10 +33,9 @@ interface Job {
 interface Resume {
     id: string;
     companyName?: string;
-    jobTitle?: string;
-    imagePath: string;
-    resumePath: string;
-    feedback: Feedback;
+    job_title?: string;
+    score: number;
+    feedback?: Feedback;
 }
 
 interface Feedback {
@@ -87,4 +86,12 @@ interface handleAnalyzeResume {
     jobTitle: string;
     jobDescription: string;
     file: File;
+}
+
+export interface SafeUser {
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    email?: string | null;
+    imageUrl?: string;
 }

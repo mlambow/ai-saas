@@ -15,7 +15,7 @@ const ResumeFeedback = async ({ params }: ResumeFeedbackPageProps)=> {
     const {id} = await params
     const resume = await getResume(id)
 
-    if (resume.user_id != user.id) {
+    if (resume?.user_id != user.id) {
         redirect('/dashboard')
     }
 

@@ -1,5 +1,5 @@
 import { Paperclip } from 'lucide-react';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { toast } from 'sonner';
 
 const MAX_FILE_SIZE_MB = 10;
