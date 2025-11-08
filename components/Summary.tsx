@@ -1,5 +1,6 @@
 import Gauge from "./Gauge";
 import ScoreBadge from "./ScoreBadge";
+import {Feedback} from "@/types";
 
 
 const Category = ({ title, score }: { title: string; score: number }) => {
@@ -10,15 +11,7 @@ const Category = ({ title, score }: { title: string; score: number }) => {
             : 'text-red-500 dark:text-red-400';
     return (
         <div className="flex flex-row items-center justify-center p-2 gap-2">
-            <div className="flex flex-row items-center justify-between
-      w-full max-w-2xl rounded-2xl p-5
-      bg-gradient-to-br from-slate-100 to-slate-200
-      dark:from-slate-800 dark:to-slate-900
-      shadow-[0_4px_20px_rgba(0,0,0,0.15)]
-      dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)]
-      transition-all duration-300
-      hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)]
-      dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+            <div className="flex flex-row items-center justify-between w-full max-w-2xl rounded-2xl p-5 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
                 <div className="flex flex-row items-center justify-center space-x-1.5 sm:space-x-3">
                     <p className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-slate-100">{title}</p>
                     <ScoreBadge score={score} />

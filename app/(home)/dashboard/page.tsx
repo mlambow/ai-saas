@@ -18,6 +18,12 @@ export default async function Dashboard() {
     const firstName = (user?.firstName?.charAt(0).toUpperCase() ?? '') + (user?.firstName?.slice(1) ?? '')
     const lastName = (user?.lastName?.charAt(0).toUpperCase() ?? '') + (user?.lastName?.slice(1) ?? '')
 
+    const bestResume = resumes.reduce((max, current) => {
+        return current?.feedback.overallScore > max?.feedback.overallScore ? current : max;
+    });
+
+    console.log(bestResume)
+
     return (
         <div className="min-h-screen mx-auto px-12 py-4 max-md:px-4">
             <div className="container mx-auto mt-6">
@@ -54,7 +60,7 @@ export default async function Dashboard() {
                     </div>
 
                     <div className="space-y-6">
-                        <ProfileCard resume={resumes[0]} />
+                        <ProfileCard resume={bestResume} />
                         <TaskCard />
                     </div>
                 </section>
