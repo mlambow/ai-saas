@@ -32,9 +32,10 @@ interface Job {
 
 interface Resume {
     id: string;
-    companyName?: string;
+    company_name?: string;
     job_title?: string;
     score: number;
+    length?: number;
     feedback?: Feedback;
 }
 
@@ -43,41 +44,51 @@ interface Feedback {
     ATS: {
         score: number;
         tips: {
-            type: "good" | "improve";
+            type: "good" | "improve" | "unsatisfactory";
             tip: string;
         }[];
     };
     toneAndStyle: {
         score: number;
-        tips: {
-            type: "good" | "improve";
-            tip: string;
-            explanation: string;
-        }[];
     };
     content: {
         score: number;
         tips: {
-            type: "good" | "improve";
+            type: "good" | "improve" | "unsatisfactory";
             tip: string;
             explanation: string;
         }[];
     };
     structure: {
         score: number;
+    };
+    skills: {
+        score: number;
+        matchedSkills: string[];
+        missingSkills: string[];
         tips: {
-            type: "good" | "improve";
+            type: "good" | "improve" | "unsatisfactory";
             tip: string;
             explanation: string;
         }[];
     };
-    skills: {
-        score: number;
+    experience: {
+        analysis: string,
+        recommendedMetrics: string[]
+    },
+    keywords: {
+        missingKeywords: string;
+        tips: string[];
+    };
+    summary: {
+        alignmentScore: number,
         tips: {
-            type: "good" | "improve";
-            tip: string;
+            type: "good" | "improve" | "unsatisfactory";
             explanation: string;
         }[];
+    };
+    aiSuggestions: {
+        improvedSummary: string;
     };
 }
 
