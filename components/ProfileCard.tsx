@@ -75,7 +75,7 @@ export default function ProfileCard({ resume } : {resume :ResumeFeedback}) {
                         >
                             <p className="text-sm">{section.name}</p>
                             <p className="font-medium text-sm">
-                                <span className={`!${getTextColor(section.score)}`}>
+                                <span className={`${getTextColor(section.score)} mr-0.5`}>
                                     {section.score}
                                 </span>/100
                             </p>

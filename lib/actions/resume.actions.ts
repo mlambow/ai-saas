@@ -172,14 +172,17 @@ export const updateResume = async (id: string, formData: FormData) => {
 };
 
 export const deleteResume = async (id: string) => {
-    const { data, error } = await supabase
+    const { error } = await supabase
         .from('resume')
         .delete()
         .eq('id', id)
         .select()
         .single();
 
-    if (error) return console.log(error.message);
+    if (error) {
+        console.error(error.message);
+        return false
+    }
 
-    return data
+    return true
 }
