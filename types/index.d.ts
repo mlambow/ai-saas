@@ -32,10 +32,23 @@ interface Job {
 
 interface Resume {
     id: string;
+    company_name: string;
+    job_title: string;
+    job_description: string;
+    created_at: string;
+    updated_at: string | null;
+    user_id: string;
+    file?: File;
+}
+
+interface ResumeFeedback {
+    id: string;
     company_name?: string;
     job_title?: string;
     score: number;
     length?: number;
+    updated_at?: string;
+    created_at?: string;
     feedback?: Feedback;
 }
 
@@ -96,7 +109,7 @@ interface handleAnalyzeResume {
     companyName: string;
     jobTitle: string;
     jobDescription: string;
-    file: File;
+    file?: File;
 }
 
 export interface SafeUser {

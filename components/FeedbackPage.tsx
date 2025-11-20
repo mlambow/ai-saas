@@ -20,10 +20,10 @@ import {
     BookOpenText,
     ListTree
 } from "lucide-react";
-import {Resume} from "@/types";
+import {ResumeFeedback} from "@/types";
 import {capitalizeWords} from "@/lib/utils";
 
-export default function FeedbackPage({resume}: {resume: Resume}) {
+export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
     return (
         <div className="max-w-6xl mx-auto px-6 py-4 space-y-8">
             {/* --------------------- HEADER --------------------- */}

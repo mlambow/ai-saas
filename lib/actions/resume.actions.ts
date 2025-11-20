@@ -7,7 +7,6 @@ import pdf from 'pdf-parse-new'
 import {auth} from "@clerk/nextjs/server";
 import {AIResponseFormat} from "@/constants";
 import mammoth from "mammoth";
-import {handleAnalyzeResume} from "@/types";
 
 const google = createGoogleGenerativeAI({
     apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY
@@ -39,17 +38,20 @@ function cleanAndParseJSON(text: string) {
     }
 }
 
-export const analyzeResume = async ({jobDescription, companyName, jobTitle, file} : handleAnalyzeResume) => {
-    const {userId} = await auth();
+export const analyzeResume = async (jobTitle: string, companyName: string, jobDescription: string, file: File) => {
 
     //extract text from resume
     let resumeText = ''
+    console.log(file)
+    if (!file) {
+        throw new Error("No file provided");
+    }
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
-    try{
+    try {
         if (file.type === 'application/pdf') {
             const pdfData = await pdf(buffer)
-            resumeText =  pdfData.text;
+            resumeText = pdfData.text;
         } else if (
             file.type ===
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
@@ -62,11 +64,10 @@ export const analyzeResume = async ({jobDescription, companyName, jobTitle, file
         } else {
             new Error("Unsupported file type. Please upload PDF, Word, or text files.");
         }
-    }catch(error){
+    } catch (error) {
         console.error("Failed to parse resume:", error);
         throw new Error("Could not extract text from resume. Please try another file.");
     }
-    console.log(resumeText)
 
     //generating the feedback
     const {text: result} = await generateText({
@@ -78,15 +79,25 @@ export const analyzeResume = async ({jobDescription, companyName, jobTitle, file
       If there is a lot to improve, don't hesitate to give low scores. This is to help the user to improve their resume.
       If available, use the job description for the job user is applying to, to give more detailed feedback.
       If provided, take the job description into consideration.
-      The job title is: ${jobTitle}
+      The job title is: ${jobTitle} at ${companyName}
       The job description is: ${jobDescription}
       This is the resume: ${resumeText}
       Provide the feedback using the following format: ${AIResponseFormat}
       Return the analysis as a JSON object, without any other text and without the backticks.
       Do not include any other text or comments.`
     });
+    return result
+}
 
+export const createResume = async (formData: FormData) => {
+    const companyName = formData.get("companyName") as string;
+    const jobTitle = formData.get("jobTitle") as string;
+    const jobDescription = formData.get("jobDescription") as string;
+    const file = formData.get("file") as File;
+
+    const result = await analyzeResume(jobTitle, jobDescription, companyName, file)
     const feedback = cleanAndParseJSON(result)
+    const {userId} = await auth();
 
     const { data: resume } = await supabase
         .from('resume')
@@ -98,7 +109,10 @@ export const analyzeResume = async ({jobDescription, companyName, jobTitle, file
             feedback: feedback
         }).select().single()
 
-    return resume;
+        return{
+            success: true,
+            resume
+        }
 }
 
 export const getResume = async (id : string) => {
@@ -129,6 +143,43 @@ export const getUserResume = async (userId: string) => {
         .order('created_at',{ ascending: false });
 
     if (error) throw new Error(error.message);
+
+    return data
+}
+
+export const updateResume = async (id: string, formData: FormData) => {
+    const companyName = formData.get("companyName") as string;
+    const jobTitle = formData.get("jobTitle") as string;
+    const jobDescription = formData.get("jobDescription") as string;
+    const file = formData.get("file") as File;
+
+    const result = await analyzeResume(jobTitle, companyName, jobDescription, file);
+    const feedback = cleanAndParseJSON(result)
+
+    const { data: resume } = await supabase
+        .from("resume")
+        .update({
+            company_name: companyName,
+            job_title: jobTitle,
+            job_description: jobDescription,
+            feedback
+        })
+        .eq("id", id)
+        .select()
+        .single();
+
+    return { success: true, resume };
+};
+
+export const deleteResume = async (id: string) => {
+    const { data, error } = await supabase
+        .from('resume')
+        .delete()
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) return console.log(error.message);
 
     return data
 }
