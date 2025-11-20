@@ -6,7 +6,7 @@ import User from "@/components/User";
 
 export default function Navbar() {
     return (
-        <nav className="flex items-center justify-between mx-auto w-full px-12 py-4 max-md:px-4">
+        <nav className="flex items-center justify-between mx-auto max-w-7xl py-4 px-6">
             <Link href='/dashboard' className="flex text-2xl font-semibold items-center hover:text-primary">
                 <Laptop size={40} className="text-primary mr-2" />
                 <div>
