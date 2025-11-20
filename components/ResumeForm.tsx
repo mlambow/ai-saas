@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -14,59 +13,71 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
+import { toast } from 'sonner'
 import FileUploader from "@/components/FileUploader";
-import {analyzeResume} from "@/lib/actions/resume.actions";
+import {createResume, updateResume} from "@/lib/actions/resume.actions";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
+import {Resume} from '@/types'
+import {ResumeValues, ResumeSchema} from "@/lib/validators/resume";
 
-const formSchema = z.object({
-    companyName: z.string().min(3).max(50, 'Job title is required'),
-    jobTitle: z.string().min(3).max(50, 'Job title is required'),
-    jobDescription: z.string().min(3, 'Job description is required'),
-})
+interface ResumeFormProps {
+    resume: Resume | null;
+}
 
-
-export default function ResumeForm() {
+export default function ResumeForm({resume} : ResumeFormProps) {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false)
-    const [status, setStatus] = useState<string>('');
     const handleFileSelect = (file: File | null) => {
         setFile(file);
     }
     const router = useRouter()
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<ResumeValues>({
+        resolver: zodResolver(ResumeSchema),
         defaultValues: {
-            companyName: "",
-            jobTitle: "",
-            jobDescription: ""
+            companyName: resume?.company_name ?? "",
+            jobTitle: resume?.job_title ?? "",
+            jobDescription: resume?.job_description ?? ""
         },
     })
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        setLoading(true)
-        setStatus('Please wait as we review your resume')
-        try{
-            if (!file) return
-            const resume = await analyzeResume({...values, file})
-            if (!resume){
-                setStatus('Failed to review your resume. Please try again.')
-                setLoading(false)
-                return
-            } else {
-                setStatus('Resume reviewed successfully. Redirecting to review')
-                setLoading(true)
-                router.push(`/resume/${resume.id}`)
-            }
-            console.log(resume)
-        } catch (error) {
-            setLoading(false)
-            setStatus('Oh no, something went wrong. Please try again.')
-            return
-        } finally {
-            setLoading(false)
+    const onSubmit = async (values: ResumeValues) => {
+        if (!file) {
+            toast.error("Please upload a resume file.");
+            return;
         }
-    }
+
+        setLoading(true);
+        toast.message("Analyzing resume...", {
+            description: "Your resume is being scanned and analyzed.",
+        });
+
+        const formData = new FormData();
+        formData.append("companyName", values.companyName);
+        formData.append("jobTitle", values.jobTitle);
+        formData.append("jobDescription", values.jobDescription ?? "");
+        formData.append("file", file);
+
+        try {
+            const response = resume
+                ? await updateResume(resume.id, formData) // update mode
+                : await createResume(formData); // create mode
+
+            toast.success("Resume analyzed successfully!", {
+                description: "Redirecting you to the results...",
+            });
+
+            router.push(`/resume/${response.resume.id}`);
+
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong.", {
+                description: "Please try again or upload another file.",
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <main className='max-w-4xl items-center justify-center p-4 rounded-lg w-full mx-auto text-center mt-2'>
@@ -79,7 +90,10 @@ export default function ResumeForm() {
                     <img src='/resume-scan.gif' alt='loading' className='md:size-1/2'/>
                 </div>
                 :
-                <p className="pb-4">Drop your resume for an ATS score and improvements score</p>
+                    <p className="pb-4">{resume ?
+                        'Drop your updated resume for an improved score'
+                        : 'Drop your resume for an ATS score and improvements score'}
+                    </p>
             }
                {!loading &&
                 <>
@@ -132,7 +146,7 @@ export default function ResumeForm() {
                                 />
                             </div>
                             <Button type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
-                                Analyze Resume
+                                {resume ? 'Update Resume' : 'Analyze Resume'}
                             </Button>
                         </form>
                     </Form>
