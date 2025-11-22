@@ -25,7 +25,7 @@ function cleanAndParseJSON(text: string) {
         // 2️⃣ Extract the first JSON-like block just in case model adds commentary
         const match = cleaned.match(/{[\s\S]*}/);
         if (!match) {
-            console.log("No JSON object found in text");
+            console.error("No JSON object found in text");
             return null;
         }
 
@@ -33,7 +33,6 @@ function cleanAndParseJSON(text: string) {
         return JSON.parse(match[0]);
     } catch (err) {
         console.error("Failed to parse feedback JSON:", err);
-        console.log("Raw feedback text:", text);
         return null;
     }
 }
@@ -42,7 +41,6 @@ export const analyzeResume = async (jobTitle: string, companyName: string, jobDe
 
     //extract text from resume
     let resumeText = ''
-    console.log(file)
     if (!file) {
         throw new Error("No file provided");
     }
@@ -121,7 +119,7 @@ export const getResume = async (id : string) => {
         .select()
         .eq('id', id).single();
 
-    if(error) return console.log(error);
+    if(error) return console.error(error.message);
 
     let feedback = data?.feedback;
     if (typeof feedback === "string") {

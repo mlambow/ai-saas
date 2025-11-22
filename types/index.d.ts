@@ -111,11 +111,3 @@ interface handleAnalyzeResume {
     jobDescription: string;
     file?: File;
 }
-
-export interface SafeUser {
-    id: string;
-    firstName?: string | null;
-    lastName?: string | null;
-    email?: string | null;
-    imageUrl?: string;
-}

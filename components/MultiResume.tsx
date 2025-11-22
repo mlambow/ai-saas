@@ -27,7 +27,6 @@ import {
     Pencil, Trash2,
     BadgeCheck, Feather, BookOpenText, ListTree,
 } from "lucide-react";
-import {ResumeFeedback} from '@/types'
 import {capitalizeWords} from "@/lib/utils";
 import { deleteResume } from '@/lib/actions/resume.actions'
 import Link from "next/link";
@@ -67,6 +66,7 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                     <AccordionContent>
                                         <div className="p-2 space-y-4">
                                             <p>Company Name: <span className='font-semibold'>{resume.company_name}</span></p>
+                                            <p>Overall Score: <span className='font-semibold'>{resume.feedback?.overallScore}</span></p>
 
                                             {/* SCORES GRID */}
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

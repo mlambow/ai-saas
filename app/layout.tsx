@@ -5,6 +5,7 @@ import React from "react";
 import {Providers} from "@/components/Providers";
 import {Toaster} from "sonner";
 import {ClerkProvider} from "@clerk/nextjs";
+import { dark } from '@clerk/themes'
 
 const poppinsSans = Poppins({
     variable: "--font-poppins-sans",
@@ -23,7 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <ClerkProvider>
+      <ClerkProvider
+          appearance={{
+              theme: dark
+          }}
+      >
         <html lang="en" suppressHydrationWarning>
           <body
             className={`${poppinsSans.variable} antialiased`}
