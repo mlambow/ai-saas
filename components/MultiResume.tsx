@@ -37,6 +37,7 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
     return (
         <div className="max-w-6xl mx-auto space-y-6">
             {/* SCROLLABLE RESUME LIST */}
+
             <Card className="rounded-2xl shadow-md">
                 <CardHeader>
                     <CardTitle className="text-xl">
@@ -45,7 +46,7 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                 </CardHeader>
 
                 <CardContent>
-                    <ScrollArea className="h-[350px] rounded-lg  ">
+                    <ScrollArea className="h-[300px] rounded-lg  ">
                         <Accordion type="multiple" className="space-y-4">
 
                             {resumes.map((resume) => (
@@ -135,14 +136,14 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
 
                                             {/* ACTION BUTTONS */}
                                             <div className="flex gap-3 pt-2">
-                                                <Button asChild className="flex gap-2">
+                                                <Button asChild className="flex gap-2 rounded-lg">
                                                     <Link href={`/resume/${resume.id}`}>
                                                         <Eye className="h-4 w-4" />
                                                         View Full Analysis
                                                     </Link>
                                                 </Button>
 
-                                                <Button asChild variant="secondary" className="flex gap-2">
+                                                <Button asChild variant="secondary" className="flex gap-2 rounded-lg">
                                                     <Link href={`/resume/edit/${resume.id}`}>
                                                         <Pencil className="h-4 w-4" />
                                                         Update Resume
@@ -153,7 +154,7 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                     <DialogTrigger asChild>
                                                         <Button
                                                             variant="destructive"
-                                                            className="flex gap-2 cursor-pointer"
+                                                            className="flex gap-2 cursor-pointer rounded-lg"
                                                         >
                                                             <Trash2 className="h-4 w-4" />
                                                             Delete
@@ -182,7 +183,6 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                                     const result = await deleteResume(resume.id);
 
                                                                     if (result) {
-
                                                                         toast.success("Resume deleted successfully");
                                                                     } else {
                                                                         toast.error("Failed to delete resume");

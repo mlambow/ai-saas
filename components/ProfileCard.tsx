@@ -2,7 +2,6 @@
 
 import { Card } from "@/components/ui/card";
 import {useUser} from "@clerk/nextjs";
-import {ResumeFeedback} from "@/types";
 import Link from "next/link";
 import {capitalizeWords, getTextColor} from "@/lib/utils";
 
@@ -31,25 +30,8 @@ export default function ProfileCard({ resume } : {resume :ResumeFeedback}) {
         : [];
 
     return (
-        <Card>
-            {!resume ? (
-                    <div className="flex flex-col items-start gap-4 px-4 py-1.5">
-                        <div className="flex items-center gap-4 w-full">
-                            <img
-                                src={user?.imageUrl || user?.firstName?.charAt(0)?.toUpperCase()}
-                                alt='User image'
-                                className="w-24 h-24 rounded-full object-cover"
-                            />
-                            <div className="font-bold text-lg">{fullName}</div>
-                        </div>
-                        <p className='text-2xl font-semibold'>
-                            Hi, {capitalizeWords(user?.firstName ?? '')}
-                        </p>
-                    </div>
-
-                ) : (
-
-            <Link href={`/resume/${resume.id}`} className="flex flex-col items-start gap-4 px-4 py-1.5">
+        <Card className={`${!resume && 'hidden'}`}>
+            <Link href={`/resume/${resume?.id}`} className="flex flex-col items-start gap-4 px-4 py-1.5">
                 <div className="flex items-center gap-4 w-full">
                     <img
                         src={user?.imageUrl || user?.firstName?.charAt(0)?.toUpperCase()}
@@ -62,7 +44,7 @@ export default function ProfileCard({ resume } : {resume :ResumeFeedback}) {
                         <div className="mt-2">
                             <div className="text-xs text-slate-400">Resume Score <span className='text-[8px] text-slate-500 ml-2'>Best resume</span>
                             </div>
-                            <div className='font-semibold text-2xl'><span className={`${textColor} `}>{resume.feedback?.overallScore}</span> / 100</div>
+                            <div className='font-semibold text-2xl'><span className={`${textColor} `}>{resume?.feedback?.overallScore}</span> / 100</div>
                         </div>
                     </div>
                 </div>
@@ -83,8 +65,6 @@ export default function ProfileCard({ resume } : {resume :ResumeFeedback}) {
                     ))}
                 </div>
             </Link>
-            )
-            }
         </Card>
     );
 }

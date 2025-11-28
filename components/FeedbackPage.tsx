@@ -20,7 +20,6 @@ import {
     BookOpenText,
     ListTree
 } from "lucide-react";
-import {ResumeFeedback} from "@/types";
 import {capitalizeWords} from "@/lib/utils";
 
 export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
@@ -136,7 +135,7 @@ export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
                     </AccordionTrigger>
                     <AccordionContent>
                         <ul className="list-disc ml-6 space-y-2">
-                            {resume.feedback?.summary.tips.map((item) => (
+                            {resume.feedback?.summary?.tips.map((item) => (
                                 <li
                                     key={item.explanation}
                                     className={
@@ -196,7 +195,7 @@ export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
                             Consider adding metrics such as:
                         </p>
                         <ul className="list-disc ml-6 space-y-2">
-                            {resume.feedback?.experience.recommendedMetrics.map((item) => (
+                            {resume.feedback?.experience?.recommendedMetrics.map((item) => (
                                 <li key={item}>
                                     {item}
                                 </li>
@@ -218,11 +217,11 @@ export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
                             Missing keywords detected from job description:
                             <span className="text-red-600 font-medium">
                                 {" "}
-                                {resume.feedback?.keywords.missingKeywords}
+                                {resume.feedback?.keywords?.missingKeywords}
                             </span>
                         </p>
                         <ul className='list-disc ml-4 space-y-2'>
-                            {resume.feedback?.keywords.tips.map((item) => (
+                            {resume.feedback?.keywords?.tips.map((item) => (
                                 <li key={item}>{item}</li>
                             ))}
                         </ul>
@@ -239,7 +238,7 @@ export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
                     </AccordionTrigger>
                     <AccordionContent>
                         <ul className="list-disc ml-6 space-y-2">
-                            {resume.feedback?.content.tips.map((item) => (
+                            {resume.feedback?.content?.tips.map((item) => (
                                 <li
                                     key={item.explanation}
                                     className={
@@ -269,7 +268,7 @@ export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
                         <p className="font-medium mb-2">Improved Resume Summary:</p>
                         <div className="p-4 border rounded-xl bg-muted/30">
                             <p>
-                                “{resume.feedback?.aiSuggestions.improvedSummary}”
+                                “{resume.feedback?.aiSuggestions?.improvedSummary}”
                             </p>
                         </div>
                     </AccordionContent>
