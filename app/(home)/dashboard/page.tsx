@@ -39,14 +39,14 @@ export default async function Dashboard() {
                         <p className="text-sm mt-1 text-slate-600 dark:text-slate-500">Optimize your career path today</p>
                     </div>
                     <div className={`${!resumes || resumes.length === 0 && 'hidden'} flex items-center justify-end gap-3`}>
-                        <Button className='rounded-xl flex-1 dark:hover:bg-secondary-foreground hover:bg-secondary-foreground/50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]'>
+                        <Button className='rounded-xl flex-1 dark:hover:bg-secondary-foreground hover:bg-secondary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]'>
                             <Link href='/interview' className="flex items-center justify-center w-full py-4 px-3 dark:hover:text-black">
                                 <Plus  className='mr-3'/>
                                 Interview
                             </Link>
                         </Button>
-                        <Button className='rounded-xl flex-1 bg-secondary-foreground dark:bg-secondary hover:bg-secondary dark:hover:bg-primary/50 shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]'>
-                            <Link href='/resume' className="flex items-center justify-center w-full py-4 px-3 hover:text-black dark:hover:text-white">
+                        <Button className='rounded-xl flex-1 bg-secondary-foreground dark:bg-secondary hover:bg-secondary dark:hover:bg-secondary-foreground shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)]'>
+                            <Link href='/resume' className="flex items-center justify-center w-full py-4 px-3 hover:text-black">
                                 <Plus  className='mr-3'/>
                                 Resume
                             </Link>
