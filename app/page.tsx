@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import {Button} from "@/components/ui/button";
-import {SignInButton} from "@clerk/nextjs";
+import {SignUpButton} from "@clerk/nextjs";
 
 export default async function LandingPage() {
     return (
@@ -12,14 +12,14 @@ export default async function LandingPage() {
                 Step into the future of job hunting with tools designed to give you an edge — from ATS-friendly resume reviews to realistic mock interviews and AI-powered coaching. Whether you're a fresh graduate or a seasoned pro, we help you get hired, faster.
             </p>
 
-            <SignInButton>
+            <SignUpButton>
                 <Button className='mx-auto mt-12 md:mt-10 text-3xl flex items-center justify-center dark:bg-primary/90 py-8 rounded-full cursor-pointer font-light dark:hover:bg-primary/40 hover:bg-secondary-foreground' size='lg'>
                     <div className='flex items-center justify-center font-semibold'>
                         Start Training
                         <ArrowRight className='ml-4 mt-1 size-10' />
                     </div>
                 </Button>
-            </SignInButton>
+            </SignUpButton>
         </div>
     )
 }

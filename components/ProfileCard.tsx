@@ -29,6 +29,7 @@ export default function ProfileCard({ resume } : {resume :ResumeFeedback}) {
         ]
         : [];
 
+    console.log(user)
     return (
         <Card className={`${!resume && 'hidden'}`}>
             <Link href={`/resume/${resume?.id}`} className="flex flex-col items-start gap-4 px-4 py-1.5">

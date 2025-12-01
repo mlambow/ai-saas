@@ -22,8 +22,8 @@ import {
 import { Input } from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea";
 import {createInterview} from "@/lib/actions/interview.actions";
-import React, {useState} from "react";
-import {redirect, useRouter} from "next/navigation";
+import React from "react";
+import { useRouter} from "next/navigation";
 
 const formSchema = z.object({
     jobTitle: z.string().min(3).max(50, 'Job title is required'),
@@ -33,7 +33,6 @@ const formSchema = z.object({
 })
 
 export default function InterviewForm() {
-    const [questions, setQuestions] = useState<string | null>(null);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -52,28 +51,13 @@ export default function InterviewForm() {
         router.push(`/interview/${interview.id}`)
     }
 
-    // const onHandleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //
-    //     const res = await fetch('/api/interview', {
-    //         method: 'POST',
-    //         body: JSON.stringify(form),
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //     });
-    //
-    //     const { interviewId } = await res.json();
-    //     router.push(`/interview/${interviewId}`);
-    // };
-
     return (
         <main className='max-w-4xl items-center justify-center p-4 rounded-lg w-full mx-auto text-center mt-2'>
             <h1 className='text-lg md:text-2xl font-semibold p-3'>AI Powered Interview Preparation</h1>
             <p className="pb-4 max-sm:text-sm">Please fill in the relevant fields to start preparing for your big day</p>
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative">
                     <FormField
                         control={form.control}
                         name="jobTitle"
@@ -142,14 +126,11 @@ export default function InterviewForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
-                        Create an Interview
+                    <Button disabled type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
+                        Under construction
                     </Button>
                 </form>
             </Form>
-            {/*{questions && questions.length > 0 && (*/}
-            {/*    <>{questions}</>*/}
-            {/*)}*/}
         </main>
     )
 }

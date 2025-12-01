@@ -1,5 +1,3 @@
-import Agent from "@/components/Agent";
-
 interface InterviewSessionPageProps {
     params: Promise<{ id: string}>;
 }
@@ -10,7 +8,6 @@ const InterviewSession = async ({ params }: InterviewSessionPageProps)=> {
     return(
         <main>
             Interview: {id}
-            <Agent />
         </main>
     )
 }
