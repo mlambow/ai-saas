@@ -28,7 +28,7 @@ import { useRouter} from "next/navigation";
 const formSchema = z.object({
     jobTitle: z.string().min(3).max(50, 'Job title is required'),
     experienceLevel: z.string().min(3).max(50, 'Experience level is required'),
-    numQuestions: z.coerce.number().min(1).max(10, 'Number of questions must be between 1 - 10'),
+    numQuestions: z.number().min(1).max(10, 'Number of questions must be between 1 - 10'),
     jobDescription: z.string().min(3, 'Job description is required'),
 })
 
