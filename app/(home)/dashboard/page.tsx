@@ -2,9 +2,6 @@ import {getUserResume} from "@/lib/actions/resume.actions";
 import {currentUser} from "@clerk/nextjs/server";
 import {redirect} from "next/navigation";
 import ProfileCard from "@/components/ProfileCard";
-import ProgressCard from "@/components/ProgressCard";
-import SessionTracker from "@/components/SessionTracker";
-import TaskCard from "@/components/TaskCard";
 import {Plus} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
@@ -68,11 +65,6 @@ export default async function Dashboard() {
                     <section className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-2 space-y-6">
                             <MultiResume resumes={resumes}/>
-
-                            {/*<div className="grid grid-cols-1 md:grid-cols-2 gap-6">*/}
-                            {/*    <ProgressCard />*/}
-                            {/*    <SessionTracker />*/}
-                            {/*</div>*/}
                         </div>
 
                         <div className="space-y-6">
