@@ -18,7 +18,6 @@ import FileUploader from "@/components/FileUploader";
 import {createResume, updateResume} from "@/lib/actions/resume.actions";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
-import {Resume} from '@/types'
 import {ResumeValues, ResumeSchema} from "@/lib/validators/resume";
 
 interface ResumeFormProps {
@@ -86,7 +85,7 @@ export default function ResumeForm({resume} : ResumeFormProps) {
             </h1>
             {loading ?
                 <div className='flex flex-col items-center justify-center'>
-                    <p>{status}</p>
+                    <p></p>
                     <img src='/resume-scan.gif' alt='loading' className='md:size-1/2'/>
                 </div>
                 :
