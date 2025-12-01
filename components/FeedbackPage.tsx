@@ -88,6 +88,15 @@ export default function FeedbackPage({resume}: {resume: ResumeFeedback}) {
                 </Card>
             </div>
 
+            {/* --------------------- LIST MARKERS ---------------------- */}
+            <div className='ml-4'>
+                <ul className='list-disc flex gap-8 text-muted-foreground text-xs'>
+                    <li className="marker:text-green-600">Looking good</li>
+                    <li className="marker:text-yellow-600">Needs a bit of work</li>
+                    <li className="marker:text-red-600">Fails to meet expectations</li>
+                </ul>
+            </div>
+
             {/* --------------------- ACCORDION ---------------------- */}
             <Accordion type="single" collapsible className="space-y-4">
 
