@@ -40,7 +40,7 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
 
             <Card className="rounded-2xl shadow-md">
                 <CardHeader>
-                    <CardTitle className="text-xl">
+                    <CardTitle className="text-lg md:text-xl">
                         All Resumes ({resumes.length})
                     </CardTitle>
                 </CardHeader>
@@ -80,10 +80,12 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                         </CardTitle>
                                                     </CardHeader>
                                                     <CardContent>
-                                                        <div className="text-3xl font-bold">
+                                                        <div className="text-xl md:text-2xl lg:text-3xl font-bold">
                                                             {resume.feedback?.toneAndStyle.score}%
                                                         </div>
-                                                        <Progress value={resume.feedback?.toneAndStyle.score} />
+                                                        <Progress
+                                                            value={resume.feedback?.toneAndStyle.score}
+                                                        />
                                                     </CardContent>
                                                 </Card>
 
@@ -96,10 +98,12 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                         </CardTitle>
                                                     </CardHeader>
                                                     <CardContent>
-                                                        <div className="text-3xl font-bold">
+                                                        <div className="text-xl md:text-2xl lg:text-3xl font-bold">
                                                             {resume.feedback?.content.score}%
                                                         </div>
-                                                        <Progress value={resume.feedback?.content.score} />
+                                                        <Progress
+                                                            value={resume.feedback?.content.score}
+                                                        />
                                                     </CardContent>
                                                 </Card>
 
@@ -112,10 +116,12 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                         </CardTitle>
                                                     </CardHeader>
                                                     <CardContent>
-                                                        <div className="text-3xl font-bold">
+                                                        <div className="text-xl md:text-2xl lg:text-3xl font-bold">
                                                             {resume.feedback?.structure.score}%
                                                         </div>
-                                                        <Progress value={resume.feedback?.structure.score} />
+                                                        <Progress
+                                                            value={resume.feedback?.structure.score}
+                                                        />
                                                     </CardContent>
                                                 </Card>
 
@@ -128,25 +134,29 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                         </CardTitle>
                                                     </CardHeader>
                                                     <CardContent>
-                                                        <div className="text-4xl font-bold">{resume.feedback?.skills.score}%</div>
-                                                        <Progress value={resume.feedback?.skills.score} className="h-2" />
+                                                        <div className="text-xl md:text-2xl lg:text-3xl font-bold">
+                                                            {resume.feedback?.skills.score}%
+                                                        </div>
+                                                        <Progress
+                                                            value={resume.feedback?.skills.score}
+                                                        />
                                                     </CardContent>
                                                 </Card>
                                             </div>
 
                                             {/* ACTION BUTTONS */}
-                                            <div className="flex gap-3 pt-2">
+                                            <div className="flex justify-around md:justify-between gap-3 pt-2">
                                                 <Button asChild className="flex gap-2 rounded-lg">
                                                     <Link href={`/resume/${resume.id}`}>
-                                                        <Eye className="h-4 w-4" />
-                                                        View Full Analysis
+                                                        <Eye className="h-4 w-4 hidden md:flex" />
+                                                        <p className='flex'>View <span className='hidden md:block md:ml-1'>Full Analysis</span></p>
                                                     </Link>
                                                 </Button>
 
                                                 <Button asChild variant="secondary" className="flex gap-2 rounded-lg">
                                                     <Link href={`/resume/edit/${resume.id}`}>
-                                                        <Pencil className="h-4 w-4" />
-                                                        Update Resume
+                                                        <Pencil className="h-4 w-4 hidden md:flex" />
+                                                        <p className='flex'>Update <span className='hidden md:block md:ml-1'>Resume</span></p>
                                                     </Link>
                                                 </Button>
 
@@ -156,8 +166,8 @@ export default function MultiResume({ resumes }: { resumes: ResumeFeedback[] }) 
                                                             variant="destructive"
                                                             className="flex gap-2 cursor-pointer rounded-lg"
                                                         >
-                                                            <Trash2 className="h-4 w-4" />
-                                                            Delete
+                                                            <Trash2 className="h-4 w-4 hidden md:flex" />
+                                                            <p className=''>Delete</p>
                                                         </Button>
                                                     </DialogTrigger>
 

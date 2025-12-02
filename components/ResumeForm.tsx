@@ -80,16 +80,16 @@ export default function ResumeForm({resume} : ResumeFormProps) {
 
     return (
         <main className='max-w-4xl items-center justify-center p-4 rounded-lg w-full mx-auto text-center mt-2'>
-            <h1 className="text-2xl font-semibold mb-2">
+            <h1 className="text-lg md:text-2xl font-semibold mb-2">
                 Smart Feedback For Your Dream Job
             </h1>
             {loading ?
                 <div className='flex flex-col items-center justify-center'>
-                    <p></p>
+                    <p className='text-sm md:text-base'>PLease wait as we analyse your resume</p>
                     <img src='/resume-scan.gif' alt='loading' className='md:size-1/2'/>
                 </div>
                 :
-                    <p className="pb-4">{resume ?
+                    <p className="pb-4 text-sm md:text-base">{resume ?
                         'Drop your updated resume for an improved score'
                         : 'Drop your resume for an ATS score and improvements score'}
                     </p>
@@ -103,7 +103,7 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                 name="companyName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Company Name</FormLabel>
+                                        <FormLabel className='text-sm md:text-base'>Company Name</FormLabel>
                                         <FormControl>
                                             <Input placeholder="Amazon, Google, Shoprite" {...field} />
                                         </FormControl>
@@ -116,7 +116,7 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                 name="jobTitle"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Job Title</FormLabel>
+                                        <FormLabel className='text-sm md:text-base'>Job Title</FormLabel>
                                         <FormControl>
                                             <Input placeholder="Software Developer, Auditor, Cashier" {...field} />
                                         </FormControl>
@@ -129,7 +129,7 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                 name="jobDescription"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Job Description</FormLabel>
+                                        <FormLabel className='text-sm md:text-base'>Job Description</FormLabel>
                                         <FormControl>
                                             <Textarea placeholder={`Please copy and paste the job description here.`} {...field} />
                                         </FormControl>
@@ -138,7 +138,7 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                 )}
                             />
                             <div className='space-y-2'>
-                                <FormLabel>Resume</FormLabel>
+                                <FormLabel className='text-sm md:text-base'>Resume</FormLabel>
                                 <FileUploader
                                     onFileSelect={handleFileSelect}
                                     value={file}
