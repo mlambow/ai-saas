@@ -126,7 +126,7 @@ export default function InterviewForm() {
                             </FormItem>
                         )}
                     />
-                    <Button disabled type="submit" className='w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
+                    <Button disabled type="submit" className='bg-red-400 w-full cursor-pointer hover:bg-secondary-foreground dark:hover:bg-secondary'>
                         Under construction
                     </Button>
                 </form>
