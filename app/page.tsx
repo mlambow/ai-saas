@@ -12,7 +12,7 @@ export default async function LandingPage() {
                 Step into the future of job hunting with tools designed to give you an edge — from ATS-friendly resume reviews to realistic mock interviews and AI-powered coaching. Whether you're a fresh graduate or a seasoned pro, we help you get hired, faster.
             </p>
 
-            <SignUpButton>
+            <SignUpButton forceRedirectUrl='/dashboard'>
                 <Button className='mx-auto mt-12 md:mt-10 text-xl md:text-2xl lg:text-3xl flex items-center justify-center dark:bg-primary/90 py-8 rounded-full cursor-pointer font-light dark:hover:bg-secondary-foreground dark:hover:text-black hover:bg-secondary-foreground' size='lg'>
                     <div className='flex items-center justify-center font-semibold'>
                         Start Training
