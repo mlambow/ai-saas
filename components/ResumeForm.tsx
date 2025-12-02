@@ -79,7 +79,7 @@ export default function ResumeForm({resume} : ResumeFormProps) {
     };
 
     return (
-        <main className='max-w-4xl items-center justify-center p-4 rounded-lg w-full mx-auto text-center mt-2'>
+        <main className='max-w-4xl items-center justify-center p-4 rounded-lg w-full mx-auto -mt-2 text-center md:mt-2'>
             <h1 className="text-lg md:text-2xl font-semibold mb-2">
                 Smart Feedback For Your Dream Job
             </h1>
@@ -105,7 +105,11 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                     <FormItem>
                                         <FormLabel className='text-sm md:text-base'>Company Name</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Amazon, Google, Shoprite" {...field} />
+                                            <Input
+                                                className='placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base'
+                                                placeholder="Amazon, Google, Shoprite"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -118,7 +122,11 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                     <FormItem>
                                         <FormLabel className='text-sm md:text-base'>Job Title</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Software Developer, Auditor, Cashier" {...field} />
+                                            <Input
+                                                className='placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base'
+                                                placeholder="Software Developer, Auditor, Cashier"
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -131,7 +139,11 @@ export default function ResumeForm({resume} : ResumeFormProps) {
                                     <FormItem>
                                         <FormLabel className='text-sm md:text-base'>Job Description</FormLabel>
                                         <FormControl>
-                                            <Textarea placeholder={`Please copy and paste the job description here.`} {...field} />
+                                            <Textarea
+                                                className='placeholder:text-xs sm:placeholder:text-sm md:placeholder:text-base'
+                                                placeholder={`Please copy and paste the job description here.`}
+                                                {...field}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

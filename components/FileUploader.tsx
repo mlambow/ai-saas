@@ -65,8 +65,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ value, onFileSelect }) => {
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center">
-                        <Paperclip className='size-6 text-muted-foreground group-hover:text-primary' />
-                        <p className="text-sm font-semibold mt-1">Click to select a PDF, DOC, or TXT file (max 10MB)</p>
+                        <Paperclip className='size-4 md:size-6 text-muted-foreground group-hover:text-primary' />
+                        <p className="text-xs md:text-sm font-semibold mt-1">Click to select a PDF, DOC, or TXT file (max 10MB)</p>
                     </div>
                 )}
                 <input
