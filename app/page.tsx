@@ -1,8 +1,12 @@
 import { ArrowRight } from 'lucide-react'
 import {Button} from "@/components/ui/button";
 import {SignUpButton} from "@clerk/nextjs";
+import {currentUser} from "@clerk/nextjs/server";
+import {redirect} from "next/navigation";
 
 export default async function LandingPage() {
+    const user = await currentUser();
+    if (user) redirect('/dashboard');
     return (
         <div className='flex flex-col max-w-4xl mx-auto items-center justify-center space-y-6 h-screen w-screen'>
             <h1 className='text-2xl md:text-3xl lg:text-4xl px-4 sm:px-5 md:px-7 font-bold mb-2 text-center'>
